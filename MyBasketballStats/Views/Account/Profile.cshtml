@@ -1,0 +1,216 @@
+﻿@using MyBasketballStats.Enums
+
+@model MyBasketballStats.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+
+<div>
+    <p class="h1 ml-1">Profile</p>
+    <hr />
+    <dl class="row ml-1">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.Surname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.Surname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.Patronymic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.Patronymic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.TotalScores)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.TotalScores)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.TotalAssists)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.TotalAssists)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.TotalBlockshots)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.TotalBlockshots)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.TotalSteals)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.TotalSteals)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Person.TotalMinutes)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Person.TotalMinutes)
+        </dd>
+        @if (Model.AccessType == ProfileAccessType.Owner)
+        {
+            <dd class="col-sm-10 mt-4">
+                <a class="btn btn-dark" asp-controller="Account" asp-action="AddPerfomance">Add day perfomance</a>
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10 mt-4">
+                <a class="btn btn-dark" asp-controller="Account" asp-action="ShowFriends" asp-route-id="@Model.Person.Id">Show friends</a>
+            </dd>
+        }
+
+    </dl>
+
+    @{
+        var points = Model.GetPointsBetween();
+        string[] strs = points.Split(' ');
+    }
+    @if (strs.Count() > 1 || Model.Person.GamePerfomances.Count > 1)
+    {
+        <form asp-controller="Account" asp-action="Profile" method="post">
+            <input style="visibility:hidden" id="id" name="id" type="text" value="@Model.Person.Id" />
+            <input style="visibility:hidden" id="email" name="email" type="text" value="@Model.Email" />
+            <input style="visibility:hidden" id="accessType" name="accessType" value="@Model.AccessType" />
+            <div class="row">
+                <div class="m-auto">
+                    <label for="begin">Begin: </label>
+                    <input class="mr-3" style="width:7vw" id="begin" name="begin" type="text" value="@Model.Begin.ToString("dd.MM.yyyy")" />
+                    <label for="end">End: </label>
+                    <input style="width:7vw" id="end" name="end" type="text" value="@Model.End.ToString("dd.MM.yyyy")" />
+                    <input class="btn btn-dark ml-2" type="submit" value="Edit" />
+                </div>
+            </div>
+        </form>
+        <hr>
+        <div class="btn-group col-sm-12" role="group">
+            <button type="button" class="btn btn-dark" id="points">Points</button>
+            <button type="button" class="btn btn-dark" id="assists">Assists</button>
+            <button type="button" class="btn btn-dark" id="rebounds">Rebounds</button>
+            <button type="button" class="btn btn-dark" id="blockshots">Blockshots</button>
+            <button type="button" class="btn btn-dark" id="steals">Steals</button>
+            <button type="button" class="btn btn-dark" id="avg">Avg</button>
+        </div>
+    }
+    @if (strs.Count() == 1 && strs[0] == "" && Model.Person.GamePerfomances.Count > 1)
+    {
+        <script>
+            alert("There aren't perfomances during this period");
+        </script>
+    }
+
+    <canvas id="myChart" style="height:0px">
+    </canvas>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    let begDate;
+    let endDate;
+    let begChanged = false;
+    let endChanged = false;
+    let event = new Event("change");
+    let beg = document.querySelector('#begin');
+    let end = document.querySelector('#end');
+    beg.addEventListener("focus", function () {
+        begDate = this.value;
+        this.type = 'date';
+    });
+    beg.addEventListener("blur", function () {
+        if (this.value != '') {
+            let ar = this.value.split('-');
+            begDate = `${ar[2]}.${ar[1]}.${ar[0]}`;
+        }
+        console.log(this.value);
+        this.type = 'text';
+        console.log(begDate);
+        this.value = begDate;
+    });
+    end.addEventListener("focus", function () {
+        endDate = this.value;
+        console.log(endDate);
+        this.type = 'date';
+    });
+    end.addEventListener("blur", function () {
+        if (this.value != '') {
+            let ar = this.value.split('-');
+            endDate = `${ar[2]}.${ar[1]}.${ar[0]}`;
+        }
+        console.log(this.value);
+        this.type = 'text';
+        this.value = endDate;
+    });
+    let chart = null;
+    function refresh(data)
+    {
+        let canvas = document.querySelector("#myChart").getContext('2d');
+        var now = new Date();
+        let begin = document.querySelector("#begin").value;
+        let end = document.querySelector("#end").value;
+        console.log(begin);
+        console.log(end);
+        let labels = `@Model.GetDaysBetween()`;
+        console.log(labels);
+        console.log(data);
+        if (data != "" && labels != "")
+        {
+            if(chart != null)
+                chart.destroy();
+            chart = new Chart(canvas,
+            {
+                type: 'line',
+                data: {
+                    labels: labels.split(' '),
+                    datasets: [{
+                        label: `Points per ` + `@Model.Duration`,
+                        data: data.split(' '),
+                        backgroundcolor: 'rgba(0,0,0)'
+                    }]
+                },
+                options:{ }
+            })
+        }
+    }
+
+    document.querySelector("#points").addEventListener("click", () => {
+        let data = `@points`;
+            refresh(data);
+        });
+    document.querySelector("#assists").addEventListener("click", () => {
+            let data = `@Model.GetAssistsBetween()`;
+            refresh(data);
+        });
+    document.querySelector("#rebounds").addEventListener("click", () => {
+            let data = `@Model.GetReboundsBetween()`;
+            refresh(data);
+        });
+    document.querySelector("#blockshots").addEventListener("click", () => {
+            let data = `@Model.GetBlockshotsBetween()`;
+            refresh(data);
+        });
+    document.querySelector("#steals").addEventListener("click", () => {
+            let data = `@Model.GetStealsBetween()`;
+            refresh(data);
+    });
+    document.querySelector("#avg").addEventListener("click", () => {
+        let data = `@Model.GetAvgBetween().Replace(',','.')`;
+        refresh(data);
+    });
+</script>

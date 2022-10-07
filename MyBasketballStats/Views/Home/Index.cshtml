@@ -1,0 +1,117 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using MyBasketballStats.Models
+@model List<Notification>
+
+<ul class="myList">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="myListItem" style="padding:9.5px;">
+            <a class="myListItem text-decoration-none" asp-controller="Account" asp-action="Profile">My profile</a>
+        </li>
+        <li class="myListItem" style="padding:9.5px;">
+            <a class="myListItem text-decoration-none " asp-controller="Account" asp-action="SendFriendRequest" asp-route-id="0">Add friend</a>
+        </li>
+        <li class="myListItem" style="padding:9.5px;">
+            <a class="myListItem text-decoration-none " asp-controller="Account" asp-action="ShowFriends" asp-route-id="@ViewBag.CurrentId">Show all friends</a>
+        </li>
+        @*<li class="myListItem">
+                <div class="dropdown bg-transparent dropright">
+                    <button style="font-size:50px;" class="myListItem h2 btn btn-secondary dropdown-toggle bg-transparent border-0 text-decoration-none text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        My basketball friends
+                    </button>
+                    <div class="dropdown-menu  bg-transparent" aria-labelledby="dropdownMenuButton">
+                        <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Action</a>
+                        <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Another action</a>
+                        <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Something else here</a>
+                    </div>
+                </div>
+            </li>*@
+    }
+    @*<li class="myListItem">
+            <div class="dropdown bg-transparent dropright">
+                <button style="font-size:50px;" class="myListItem h2 btn btn-secondary dropdown-toggle bg-transparent border-0 text-decoration-none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    NBA News
+                </button>
+                <div class="dropdown-menu  bg-transparent" aria-labelledby="dropdownMenuButton">
+                    <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Action</a>
+                    <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Another action</a>
+                    <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Something else here</a>
+                </div>
+            </div>
+        </li>*@
+    <li class="myListItem" style="padding:9.5px;">
+        <a class="myListItem text-decoration-none " asp-controller="Home" asp-action="ShowTrainings">Trainings</a>
+    </li>
+    @if (Model != null && Model.Count != 0)
+    {
+        <li>
+            <!-- Button trigger modal -->
+            <button type="button" style="background-color:white;border:none" class="myListItem text-decoration-none " data-toggle="modal" data-target="#exampleModal">
+                Show notifications
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Your notifications</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                @foreach (var item in Model)
+                                {
+                                    <li class="list-group-item" style="color:black">
+                                        <h5>@item.Message</h5>
+                                        @if (item.Type == MyBasketballStats.Enums.NotificationType.FriendRequest)
+                                        {
+                                            <a class="btn btn-dark h6" asp-action="AcceptFriendRequest" asp-controller="Account" asp-route-id="@item.SenderId">Accept</a>
+                                            <a class="btn btn-dark h6" asp-action="RefuseFriendRequest" asp-controller="Account" asp-route-id="@item.SenderId">Refuse</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-dark h6" asp-action="MarkAsChecked" asp-controller="Account" asp-route-notificationId="@item.Id">Mark as checked</a>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                            <a class="btn btn-dark h5" asp-action="MarkAllAsChecked" asp-controller="Account">Mark all as checked</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+    @*<li class="myListItem">
+            <div class="dropdown bg-transparent dropright">
+                <button style="font-size:50px;" class="myListItem h2 btn btn-secondary dropdown-toggle bg-transparent border-0 text-decoration-none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Others
+                </button>
+                <div class="dropdown-menu  bg-transparent" aria-labelledby="dropdownMenuButton">
+                    <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Action</a>
+                    <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Another action</a>
+                    <a class="myListItem dropdown-item h2 bg-transparent text-white" href="#">Something else here</a>
+                </div>
+            </div>
+        </li>*@
+    @*<li class="myListItem">
+            <div class="dropdown bg-transparent dropright">
+                <button style="font-size:50px;" class="myListItem h2 btn btn-secondary dropdown-toggle bg-transparent border-0 text-decoration-none text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    For Admin
+                </button>
+                <div class="dropdown-menu  bg-transparent" aria-labelledby="dropdownMenuButton">
+                    <a class="myListItem dropdown-item h2 bg-transparent" asp-controller="Home" asp-action="AddPlayer">Add player</a>
+                    <a class="myListItem dropdown-item h2 bg-transparent" asp-controller="Home" asp-action="ShowAllPlayers">Show all players</a>
+                    <a class="myListItem dropdown-item h2 bg-transparent" asp-controller="Home" asp-action="DeletePlayer">Delete player</a>
+                </div>
+            </div>
+        </li>*@
+    @*<li class="myListItem" style="padding:9.5px;">
+        <a class="myListItem text-decoration-none " asp-controller="Admin" asp-action="AdminPage">Admin page</a>
+    </li>*@
+</ul>

@@ -1,0 +1,87 @@
+﻿@using MyBasketballStats.Models
+@model List<Person>
+@{
+    ViewData["Title"] = "AddFriend";
+}
+<form class="col-sm-12 m-5" method="post" asp-action="SendFriendRequest" asp-controller="Account">
+    <div class="form-group row">
+        <label class="col-md-2 pt-2 text-right h6" for="exampleInputEmail1">Email address: </label>
+        <input class="form-control col-md-6 mr-2" id="friendEmail" name="friendEmail" type="email" required aria-describedby="emailHelp" />
+        <button type="submit" class="btn btn-dark col-md-2">Submit</button>
+    </div>
+</form>
+<div class="mt-5 pt-5">
+    @{
+        int j = 0;
+        int i = 0;
+        string perEmail = "";
+        string butId = "";
+
+        for (; i < Model.Count(); i += 2)
+        {
+            perEmail = $"perEmail{j}";
+            butId = $"butId{j}";
+            <div class="row mb-5">
+                <div class="col-sm-6 m-auto">
+                    <div class="card m-auto" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[i].Name</h5>
+                            <div>
+                                <a asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@Model[i].Id" class="btn btn-dark">Go somewhere</a>
+                                <a class="btn btn-dark" style="color:white" id=@butId>Add friend</a>
+                                <p id=@perEmail style="visibility:hidden">@Model[i].Email</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @{
+                    j++;
+                }
+                @if (i + 1 != Model.Count())
+                {
+                    perEmail = $"perEmail{j}";
+                    butId = $"butId{j}";
+                    j++;
+                    <div class="col-sm-6 m-auto">
+                        <div class="card m-auto" style="width: 18rem;">
+                            <div class="card-body col-sm-12">
+                                <h5 class="card-title">@Model[i + 1].Name</h5>
+                                <div>
+                                    <a asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@Model[i + 1].Id" class="btn btn-dark">Go somewhere</a>
+                                    <a class="btn btn-dark" style="color:white" id=@butId>Add friend</a>
+                                    <p id=@perEmail style="visibility:hidden">@Model[i + 1].Email</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
+<nav class="align-bottom col-sm-12 " aria-label="Page navigation example">
+    <ul class="pagination">
+        @for (i = 0; i < ViewBag.Count; i++)
+        {
+            if (i == ViewBag.Current)
+            {
+                <li class="page-item active"><a class="page-link bg-dark" asp-route-id="@i" asp-action="SendFriendRequest" asp-controller="Account">@(i + 1)</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" asp-route-id="@i" asp-action="SendFriendRequest" asp-controller="Account">@(i + 1)</a></li>
+            }
+        }
+    </ul>
+</nav>
+<script>
+    for (let i = 0; i <@j; i++) {
+        document.querySelector("#butId" + i).addEventListener("click", function (event) {
+            console.log("anime");
+            console.dir(document.querySelector("#friendEmail"));
+            console.dir(document.querySelector("#perEmail" + i));
+            document.querySelector("#friendEmail").value = document.querySelector("#perEmail" + i).textContent;
+            document.forms[0].submit();
+        });
+    }
+</script>

@@ -1,0 +1,61 @@
+﻿@using MyBasketballStats.Models;
+@model List<Training>
+
+<ul class="list-group">
+    @{
+        int i = 0;
+    }
+    @foreach (var item in Model)
+    {
+        string id = $"exampleModal{i}";
+        string videoId = $"video{i}";
+        <li class="list-group-item col-md-12 m-2">
+            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@id">
+                    @item.Title
+                </button>*@
+
+            <!-- Modal -->
+            <!--<div class="modal fade" id=@id tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered ">
+                    <div class="modal-content" style="width:30vw;height:20vw;">
+                        <div class="modal-bod">
+                            <div class="embed-responsive embed-responsive-16by9 m-2" style="width:30vw;height:20vw;">
+                                <iframe class="embed-responsive-item" src="@item.Url" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#@id">
+                @item.Title
+            </button>
+
+            <div id=@id class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-bod">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe id=@videoId class="embed-responsive-item" src="@item.Url" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        i++;
+    }
+</ul>
+<script>
+    var videoUrls = [];
+    for (let j = 0; j < @i; j++) {
+        let id = `#exampleModal` + j;
+        let videoId = `#video` + j;
+        videoUrls[j] = $(videoId)[0].src;
+        $(id).on('shown.bs.modal', function (event) {
+            $(videoId)[0].src = videoUrls[j];
+        });
+        $(id).on('hidden.bs.modal', function (event) {
+            $(videoId)[0].src = "";
+        });
+    }
+</script>

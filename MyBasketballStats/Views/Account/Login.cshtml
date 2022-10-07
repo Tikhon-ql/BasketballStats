@@ -1,0 +1,41 @@
+﻿@model MyBasketballStats.ViewModels.Identity.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input mr-2" asp-for="RememberMe"/>Remember me
+                </label>
+                <a class="btn bg-transparent mb-1 ml-1" style="width:5vw;height:2vw" asp-controller="Account" asp-action="Register">Register</a>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Enter" class="btn btn-dark mr-2" />
+                <a class="btn btn-dark" asp-controller="Home" asp-action="Index">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

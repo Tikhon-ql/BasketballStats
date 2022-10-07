@@ -1,0 +1,49 @@
+﻿@using MyBasketballStats.Enums
+@model IEnumerable<MyBasketballStats.Models.Training>
+
+@{
+    ViewData["Title"] = "ShowTrainings";
+}
+
+<div class="btn-group col-sm-12" role="group" aria-label="Basic example">
+    <a class="btn btn-dark"
+       id="dribling"
+       asp-action="GetDriblingTurotials"
+       asp-controller="Home"
+       data-ajax="true"
+       data-ajax-mode="replace"
+       data-ajax-methode="get"
+       data-ajax-update="#res">Dribling</a>
+
+    <a class="btn btn-dark"
+       asp-action="GetGameThrowingTurotials"
+       asp-controller="Home"
+       data-ajax="true"
+       data-ajax-mode="replace"
+       data-ajax-methode="get"
+       data-ajax-update="#res">Game throwing</a>
+    <a class="btn btn-dark"
+       asp-action="GetThreePointerTurotials"
+       asp-controller="Home"
+       data-ajax="true"
+       data-ajax-mode="replace"
+       data-ajax-methode="get"
+       data-ajax-update="#res">Three pointer</a>
+    <a class="btn btn-dark"
+       asp-action="GetPassingTurotials"
+       asp-controller="Home"
+       data-ajax="true"
+       data-ajax-mode="replace"
+       data-ajax-methode="get"
+       data-ajax-update="#res">Passing</a>
+    <a class="btn btn-dark"
+       asp-action="GetWarmupTurotials"
+       asp-controller="Home"
+       data-ajax="true"
+       data-ajax-mode="replace"
+       data-ajax-methode="get"
+       data-ajax-update="#res">Warmup</a>
+</div>
+<div id="res">
+
+</div>

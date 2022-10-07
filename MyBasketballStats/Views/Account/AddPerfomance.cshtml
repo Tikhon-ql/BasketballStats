@@ -1,0 +1,89 @@
+﻿@model MyBasketballStats.Models.BasketballGamePerfomance
+
+@{
+    ViewData["Title"] = "AddPerfomance";
+}
+
+<h1>Perfomance adding</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm-12">
+        <form asp-action="AddPerfomance">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Points" class="control-label"></label>
+                    <input asp-for="Points" value="0" min="0" max="300" class="form-control" />
+                    <span asp-validation-for="Points" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Assists" class="control-label"></label>
+                    <input asp-for="Assists" value="0" min="0" max="100" class="form-control" />
+                    <span asp-validation-for="Assists" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Rebounds" class="control-label"></label>
+                    <input asp-for="Rebounds" value="0" min="0" max="100" class="form-control" />
+                    <span asp-validation-for="Rebounds" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Steals" class="control-label"></label>
+                    <input asp-for="Steals" value="0" min="0" max="50" class="form-control" />
+                    <span asp-validation-for="Steals" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Blockshots" class="control-label"></label>
+                    <input asp-for="Blockshots" value="0" min="0" max="30" class="form-control" />
+                    <span asp-validation-for="Blockshots" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Minutes" class="control-label"></label>
+                    <input asp-for="Minutes" value="0" min="0" max="100" class="form-control" />
+                    <span asp-validation-for="Minutes" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="ThrowInGame" class="control-label">Throws in game</label>
+                    <input asp-for="ThrowInGame" value="0" min="0" max="300" class="form-control" />
+                    <span asp-validation-for="ThrowInGame" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ThreePointersMade" class="control-label">Three pointers made</label>
+                    <input asp-for="ThreePointersMade" value="0" min="0" max="100" class="form-control" />
+                    <span asp-validation-for="ThreePointersMade" class="text-danger"></span>
+                </div>
+               
+
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="SuccessedThrowInGame" class="control-label">Successed throws in Game</label>
+                    <input asp-for="SuccessedThrowInGame" value="0" min="0" max="300" class="form-control" />
+                    <span asp-validation-for="SuccessedThrowInGame" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="SuccessedThreePointers" class="control-label">Successed three pointers</label>
+                    <input asp-for="SuccessedThreePointers" value="0" min="0" max="100" class="form-control" />
+                    <span asp-validation-for="SuccessedThreePointers" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <div class="row p-5">
+                    <input type="submit" value="Add" style="width:1vw" class="btn btn-dark col-md-6" />
+                    <a class="btn btn-dark col-md-6" style="width:1vw" asp-action="Profile" asp-controller="Account">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

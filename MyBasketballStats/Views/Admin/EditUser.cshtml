@@ -1,0 +1,107 @@
+﻿@model MyBasketballStats.Models.Person
+
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<h1>Edit User</h1>
+<hr />
+
+<div class="col-md-12">
+    <form asp-action="EditUser">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="Patronymic" class="control-label"></label>
+                <input asp-for="Patronymic" class="form-control" />
+                <span asp-validation-for="Patronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="TotalScores" class="control-label"></label>
+                <input asp-for="TotalScores" class="form-control" />
+                <span asp-validation-for="TotalScores" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="TotalSteals" class="control-label"></label>
+                <input asp-for="TotalSteals" class="form-control" />
+                <span asp-validation-for="TotalSteals" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="TotalBlockshots" class="control-label"></label>
+                <input asp-for="TotalBlockshots" class="form-control" />
+                <span asp-validation-for="TotalBlockshots" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="TotalAssists" class="control-label"></label>
+                <input asp-for="TotalAssists" class="form-control" />
+                <span asp-validation-for="TotalAssists" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="TotalThrowInGame" class="control-label"></label>
+                <input asp-for="TotalThrowInGame" class="form-control" />
+                <span asp-validation-for="TotalThrowInGame" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="TotalSuccessedThrowInGame" class="control-label"></label>
+                <input asp-for="TotalSuccessedThrowInGame" class="form-control" />
+                <span asp-validation-for="TotalSuccessedThrowInGame" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="TotalThreePointersMade" class="control-label"></label>
+                <input asp-for="TotalThreePointersMade" class="form-control" />
+                <span asp-validation-for="TotalThreePointersMade" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="TotalSuccessedThreePointers" class="control-label"></label>
+                <input asp-for="TotalSuccessedThreePointers" class="form-control" />
+                <span asp-validation-for="TotalSuccessedThreePointers" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label asp-for="TotalMinutes" class="control-label"></label>
+                <input asp-for="TotalMinutes" class="form-control" />
+                <span asp-validation-for="TotalMinutes" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-dark" />
+            <a class="btn btn-dark" asp-action="ShowUsers" asp-controller="Admin">Back</a>
+        </div>
+        <div class="form-group" style="visibility:hidden">
+            <label asp-for="GeopositionId" class="control-label"></label>
+            <input asp-for="GeopositionId" class="form-control" />
+            <span asp-validation-for="GeopositionId" class="text-danger"></span>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

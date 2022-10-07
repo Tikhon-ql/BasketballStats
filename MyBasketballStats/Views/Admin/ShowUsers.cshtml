@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MyBasketballStats.Models.Person>
+
+@{
+    ViewData["Title"] = "ShowUsers";
+}
+
+<h1>Users</h1>
+
+<table class="table m-auto">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Patronymic
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Total scores
+            </th>
+            <th>
+                Total steals
+            </th>
+            <th>
+                Total blockshots
+            </th>
+            <th>
+                Total assists
+            </th>
+            <th>
+                Total minutes
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                City
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Surname)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Patronymic)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Email)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.TotalScores)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.TotalSteals)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.TotalBlockshots)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.TotalAssists)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.TotalMinutes)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@item.Geoposition.Country</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@item.Geoposition.City</a>
+                </td>
+                <td>
+                    @*<a class="btn btn-dark" asp-action="DeleteUser" asp-controller="Admin" asp-route-id="@item.Id">Delete</a>*@
+                    <a class="btn" style="width:7vw" asp-action="EditUser" asp-controller="Admin" asp-route-id="@item.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn" style="width:7vw" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">Show details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

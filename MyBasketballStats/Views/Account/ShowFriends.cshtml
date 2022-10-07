@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MyBasketballStats.Models.Person>
+
+@{
+    ViewData["Title"] = "ShowFriends";
+}
+
+<h1>Friends</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patronymic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id" >@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Surname)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Patronymic)</a>
+                </td>
+                <td>
+                    <a class="text-decoration-none text-dark" asp-action="ShowAnotherProfile" asp-controller="Account" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Email)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
